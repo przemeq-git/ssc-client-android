@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Welcome to Social Computing Cloud!</string>
+    <string name="app_name">Social Computing Cloud</string>
+    <string name="register">Register your device</string>
+    <string name="activationExplanation">Check to enable mobile computing on you device. Your device will be sending data
+        as explained on the web page.
+    </string>
+</resources>
