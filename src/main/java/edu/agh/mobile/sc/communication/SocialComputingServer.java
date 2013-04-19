@@ -1,11 +1,13 @@
-package edu.agh.mobile.sc;
+package edu.agh.mobile.sc.communication;
 
 import android.util.Log;
+import edu.agh.mobile.sc.Constants;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -63,6 +65,18 @@ public class SocialComputingServer {
         } catch (IOException e) {
             Log.e(Constants.SC_LOG_TAG, e.getMessage(), e);
         }
+    }
+
+    public String get(String server) throws IOException {
+        final HttpGet get = new HttpGet(server);
+        final HttpResponse response = httpClient.execute(get);
+        final int statusCode = response.getStatusLine().getStatusCode();
+        final String responseString = EntityUtils.toString(response.getEntity());
+        Log.d(Constants.SC_LOG_TAG, "Server response = " + responseString);
+        if (statusCode != HttpStatus.SC_OK) {
+            throw new IOException("Failed request with status code " + statusCode);
+        }
+        return responseString;
     }
 
     private StatusLine sendJSONPost(String server, StringEntity requestEntity) throws IOException {

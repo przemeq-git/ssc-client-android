@@ -1,7 +1,10 @@
 package edu.agh.mobile.sc;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import edu.agh.mobile.sc.dynamic.PowerUpdateReceiver;
 
 /**
  * @author Przemyslaw Dadel
@@ -9,7 +12,7 @@ import android.content.SharedPreferences;
 public class Settings {
     public static final String SC_PREFERENCE_TAG = "SC_PREFERENCE_TAG";
 
-    public SharedPreferences getSharedPreferences(Context context) {
+    public final SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences(SC_PREFERENCE_TAG, Context.MODE_PRIVATE);
     }
 
@@ -68,5 +71,12 @@ public class Settings {
 
     public void removeRegistrationFlag(Context context) {
         getSharedPreferences(context).edit().putBoolean(Constants.SC_REGISTERED, false).commit();
+    }
+
+    public boolean getDynamicUpdatesStatus(Context context) {
+        final ComponentName receiver = new ComponentName(context, PowerUpdateReceiver.class);
+        final PackageManager pm = context.getPackageManager();
+        final int componentEnabledSetting = pm.getComponentEnabledSetting(receiver);
+        return componentEnabledSetting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
     }
 }

@@ -1,10 +1,9 @@
-package edu.agh.mobile.sc;
+package edu.agh.mobile.sc.providers;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
-import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,31 +16,34 @@ public class BatteryDataProvider implements DataProvider {
     private final IntentFilter batteryIntentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 
     public Map<String, Object> getData(Context context) {
-        final Map<String, Object> result = new HashMap<String, Object>();
-
         final Intent batteryStatus = context.registerReceiver(null, batteryIntentFilter);
+        return getStateFromIntent(batteryStatus);
+    }
 
+    public Map<String, Object> getData(Intent batteryState) {
+        return getStateFromIntent(batteryState);
+    }
+
+    private Map<String, Object> getStateFromIntent(Intent batteryStatus) {
+        final Map<String, Object> result = new HashMap<String, Object>();
         final int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-        final boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING;
-        final boolean isCharged = status == BatteryManager.BATTERY_STATUS_FULL;
-        Log.d(Constants.SC_LOG_TAG, String.format("Is charging/charged = %b/%b", isCharging, isCharged));
         result.put("status", getBatteryStateName(status));
 
         final int chargePlug = batteryStatus.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
         final boolean usbCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_USB;
         final boolean acCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_AC;
-        Log.d(Constants.SC_LOG_TAG, String.format("USB/AC = %b/%b", usbCharge, acCharge));
         result.put("plugged", getPowerSourceName(usbCharge, acCharge));
 
         int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
         int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
         float batteryLevel = level / (float) scale;
-        Log.i(Constants.SC_LOG_TAG, String.format("Battery level %f", batteryLevel));
         result.put("level", batteryLevel);
 
         int voltage = batteryStatus.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1);
-        Log.i(Constants.SC_LOG_TAG, String.format("Battery voltage %d", voltage));
         result.put("voltage", voltage);
+
+        int temperature = batteryStatus.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1);
+        result.put("temp", temperature);
 
         return result;
     }

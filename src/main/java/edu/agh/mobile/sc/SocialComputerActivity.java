@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import com.google.android.gcm.GCMRegistrar;
+import edu.agh.mobile.sc.commands.DynamicCommand;
 
 public class SocialComputerActivity extends Activity {
 
@@ -48,6 +50,17 @@ public class SocialComputerActivity extends Activity {
                 idRegistration.unregisterId(this, settings.getRegistrationId(this));
             }
         }
+        updateActivationStatusView();
+
+    }
+
+    private void updateActivationStatusView() {
+        final TextView activationStatusView = (TextView) findViewById(R.id.sccActivationStatus);
+        if (settings.isMobileComputingActive(this)) {
+            activationStatusView.setText(String.format("SCC is enabled on your device."));
+        } else {
+            activationStatusView.setText(String.format("SCC is disabled on your device."));
+        }
     }
 
     private void setupActivationCheckBox() {
@@ -56,24 +69,24 @@ public class SocialComputerActivity extends Activity {
 
         activation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean value) {
-                Log.d(Constants.SC_LOG_TAG, "Changed activation status to " + value);
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checkBoxValue) {
+                Log.d(Constants.SC_LOG_TAG, "Changed activation status to " + checkBoxValue);
                 final Context context = SocialComputerActivity.this;
                 final boolean active = settings.isMobileComputingActive(context);
 
-                if (value != active) {
-                    settings.setMobileComputingActive(SocialComputerActivity.this, value);
-                    if (value) {
+                if (checkBoxValue != active) {
+                    settings.setMobileComputingActive(SocialComputerActivity.this, checkBoxValue);
+                    if (checkBoxValue) {
                         //if activated - register
                         idRegistration.registerId(context, settings.getRegistrationId(context));
                     } else {
                         idRegistration.unregisterId(context, settings.getRegistrationId(context));
                     }
                 }
+                updateActivationStatusView();
             }
         });
     }
-
 
 }
 

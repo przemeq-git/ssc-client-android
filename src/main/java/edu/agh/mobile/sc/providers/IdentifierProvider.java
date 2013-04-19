@@ -1,9 +1,8 @@
-package edu.agh.mobile.sc;
+package edu.agh.mobile.sc.providers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.provider.Settings;
-import android.telephony.TelephonyManager;
 
 import java.util.UUID;
 
@@ -12,7 +11,7 @@ import static edu.agh.mobile.sc.HashUtil.hash;
 /**
  * @author Przemyslaw Dadel
  */
-public class IdentifierProvider {
+public class  IdentifierProvider {
 
     private static final String DEVICE_ID = "device.id";
     private final Context context;
@@ -36,14 +35,6 @@ public class IdentifierProvider {
             idBuilder.append("AID-").append(uuid);
         }
 
-        final String telephonyDeviceId = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
-        if (telephonyDeviceId != null) {
-            if (idBuilder.length() != 0) {
-                idBuilder.append("/");
-            }
-            final String uuid = hash(telephonyDeviceId);
-            idBuilder.append("TID-").append(uuid);
-        }
         if (idBuilder.length() != 0) {
             idBuilder.append("RID-").append(UUID.randomUUID().toString());
         }

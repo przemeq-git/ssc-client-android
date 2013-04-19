@@ -1,7 +1,8 @@
-package edu.agh.mobile.sc;
+package edu.agh.mobile.sc.providers;
 
 import android.content.Context;
 import android.util.Log;
+import edu.agh.mobile.sc.Constants;
 
 import java.io.*;
 import java.util.*;
@@ -28,12 +29,13 @@ public class MemDataProvider implements DataProvider {
 
                     String line;
                     while ((line = br.readLine()) != null) {
-                        Log.d(Constants.SC_LOG_TAG, "Memory: " + line);
-                        final String[] split = trim(line.split(":"));
-                        if (split.length >= 2) {
-                            final String propertyName = split[0].toLowerCase();
-                            if (isInterestingProperty(propertyName)) {
-                                result.put(propertyName, split[1]);
+                        if (line.trim().length() > 0) {
+                            final String[] split = trim(line.split(":"));
+                            if (split.length >= 2) {
+                                final String propertyName = split[0].toLowerCase();
+                                if (isInterestingProperty(propertyName)) {
+                                    result.put(propertyName, split[1]);
+                                }
                             }
                         }
                     }

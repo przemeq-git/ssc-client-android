@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="edu.agh.mobile.sc" android:versionCode="6" android:versionName="1.0.8">
+          package="edu.agh.mobile.sc" android:versionCode="8" android:versionName="1.1.0">
 
     <uses-sdk android:minSdkVersion="8"
               android:targetSdkVersion="8"/>
@@ -18,7 +18,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <!--context data-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
@@ -41,7 +40,21 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".dynamic.PowerUpdateReceiver" android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".dynamic.NetworkChangeReceiver" android:enabled="false">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
+
         <service android:name=".GCMIntentService"/>
+        <service android:name=".executor.ComputationService" android:exported="false"/>
     </application>
 
 </manifest>

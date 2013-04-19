@@ -18,7 +18,7 @@ public class HashUtilTest {
     @Test
     public void testHashInt() throws Exception {
         final int tested = 13;
-        final String hash = HashUtil.hash(13);
+        final String hash = HashUtil.hash(tested);
         Assert.assertNotNull(hash);
     }
 

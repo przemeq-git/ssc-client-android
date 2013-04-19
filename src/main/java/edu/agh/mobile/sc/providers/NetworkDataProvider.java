@@ -1,4 +1,4 @@
-package edu.agh.mobile.sc;
+package edu.agh.mobile.sc.providers;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -12,6 +12,8 @@ import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 import android.text.format.Formatter;
 import android.util.Log;
+import edu.agh.mobile.sc.Constants;
+import edu.agh.mobile.sc.Settings;
 import org.json.JSONObject;
 
 import java.net.InetAddress;

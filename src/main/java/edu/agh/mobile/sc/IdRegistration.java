@@ -1,6 +1,10 @@
 package edu.agh.mobile.sc;
 
 import android.content.Context;
+import edu.agh.mobile.sc.communication.SocialComputingServer;
+import edu.agh.mobile.sc.providers.CPUDataProvider;
+import edu.agh.mobile.sc.providers.DeviceDataProvider;
+import edu.agh.mobile.sc.providers.IdentifierProvider;
 import org.json.JSONObject;
 
 import java.util.HashMap;

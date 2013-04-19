@@ -3,7 +3,6 @@
     <string name="hello">Welcome to Social Computing Cloud!</string>
     <string name="app_name">Social Computing Cloud</string>
     <string name="register">Register your device</string>
-    <string name="activationExplanation">Check to enable mobile computing on you device. Your device will be sending data
-        as explained on the web page.
-    </string>
+    <string name="activationExplanation">Enable SCC Mobile Computing on you device.</string>
+    <string name="batteryUpdatesToggle">Send updates on power connection change</string>
 </resources>

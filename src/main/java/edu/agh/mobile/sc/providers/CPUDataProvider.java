@@ -1,7 +1,8 @@
-package edu.agh.mobile.sc;
+package edu.agh.mobile.sc.providers;
 
 import android.content.Context;
 import android.util.Log;
+import edu.agh.mobile.sc.Constants;
 
 import java.io.*;
 import java.util.HashMap;
@@ -26,10 +27,11 @@ public class CPUDataProvider implements DataProvider {
 
                     String line;
                     while ((line = br.readLine()) != null) {
-                        Log.d(Constants.SC_LOG_TAG, "CPU: " + line);
-                        String[] split = trim(line.split(":"));
-                        if (split.length >= 2) {
-                            result.put(split[0], split[1]);
+                        if (line.trim().length() > 0) {
+                            String[] split = trim(line.split(":"));
+                            if (split.length >= 2) {
+                                result.put(split[0], split[1]);
+                            }
                         }
                     }
 

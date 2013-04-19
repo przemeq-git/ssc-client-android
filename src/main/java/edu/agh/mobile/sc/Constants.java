@@ -9,7 +9,7 @@ public class Constants {
     public static final String SC_LOG_TAG = "social-computing";
     public static final String SC_REGISTERED = "sc-registered";
     public static final String SC_UNREGISTERED = "sc-unregistered";
-    public static final Object VERSION = "1.0.8";
+    public static final Object VERSION = "1.1.0";
     public static final String SENDER_ID = "PutYourSenderIdHere";
 
 }
