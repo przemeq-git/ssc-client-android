@@ -28,10 +28,7 @@ public class ComputationCommand extends AbstractExtrasCommand {
 
     @Override
     public boolean accepts(Bundle extras) {
-        if (hasExtrasValue(extras, "compute")) {
-            return true;
-        }
-        return false;
+        return hasExtrasValue(extras, "compute");
     }
 
     @Override

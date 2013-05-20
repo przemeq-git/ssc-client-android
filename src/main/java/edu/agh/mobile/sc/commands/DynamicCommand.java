@@ -47,11 +47,12 @@ public class DynamicCommand extends AbstractExtrasCommand {
             pm.setComponentEnabledSetting(receiver,
                     PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                     PackageManager.DONT_KILL_APP);
-            Log.d(Constants.SC_LOG_TAG, "Disabling power connection updates");
+            Log.d(Constants.SC_LOG_TAG, "Enabling " + component + " connection updates");
         } else {
             pm.setComponentEnabledSetting(receiver,
                     PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                     PackageManager.DONT_KILL_APP);
+            Log.d(Constants.SC_LOG_TAG, "Disabling " + component + " connection updates");
 
         }
     }

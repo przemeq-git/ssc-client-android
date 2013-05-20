@@ -46,10 +46,15 @@ public class Settings {
 
     public boolean isRegistrationSend(Context context) {
         final SharedPreferences preferences = getSharedPreferences(context);
-        return preferences.getBoolean(Constants.SC_REGISTERED, false);
+        final String version = preferences.getString(Fields.VERSION + "#", "0");
+        return version.equals(Constants.VERSION) && preferences.getBoolean(Constants.SC_REGISTERED, false);
     }
 
     public void setRegistrationSend(Context context, boolean value) {
+        getSharedPreferences(context).
+                edit().
+                putString(Fields.VERSION + "#", Constants.VERSION).
+                commit();
         setBooleanValue(context, Constants.SC_REGISTERED, value);
     }
 
@@ -73,10 +78,24 @@ public class Settings {
         getSharedPreferences(context).edit().putBoolean(Constants.SC_REGISTERED, false).commit();
     }
 
+    public long setRegistrationTimestamp(Context context) {
+        final long timestamp = System.currentTimeMillis();
+        getSharedPreferences(context).
+                edit().
+                putLong(Constants.REGISTRATION_TIMESTAMP, timestamp).
+                commit();
+        return timestamp;
+    }
+
+    public long getRegistrationTimestamp(Context context) {
+        return getSharedPreferences(context).getLong(Constants.REGISTRATION_TIMESTAMP, 0);
+    }
+
     public boolean getDynamicUpdatesStatus(Context context) {
         final ComponentName receiver = new ComponentName(context, PowerUpdateReceiver.class);
         final PackageManager pm = context.getPackageManager();
         final int componentEnabledSetting = pm.getComponentEnabledSetting(receiver);
         return componentEnabledSetting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
     }
+
 }

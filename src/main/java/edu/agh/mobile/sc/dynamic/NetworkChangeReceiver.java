@@ -38,6 +38,8 @@ public class NetworkChangeReceiver extends AbstractStatusBroadcastReceiver {
                 rememberLastStatus(context, status);
             }
 
+        } else {
+            rememberLastStatus(context, "empty");
         }
     }
 
@@ -49,7 +51,7 @@ public class NetworkChangeReceiver extends AbstractStatusBroadcastReceiver {
         builder.with("mobile", mobile);
         builder.with("wimax", wiMax);
 
-        sendMessage(serverURL, builder);
+        sendMessage(context, serverURL, builder);
     }
 
     private String getLastStatus(Context context) {

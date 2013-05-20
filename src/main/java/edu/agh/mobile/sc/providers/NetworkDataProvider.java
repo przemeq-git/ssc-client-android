@@ -198,8 +198,8 @@ public class NetworkDataProvider implements DataProvider {
                 for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
                     InetAddress inetAddress = enumIpAddr.nextElement();
                     if (!inetAddress.isLoopbackAddress()) {
-                        Log.d(Constants.SC_LOG_TAG, "Available Ip: " + inetAddress.getHostAddress().toString());
-                        availableDeviceIp.add(inetAddress.getHostAddress().toString());
+                        Log.d(Constants.SC_LOG_TAG, "Available Ip: " + inetAddress.getHostAddress());
+                        availableDeviceIp.add(inetAddress.getHostAddress());
                     }
                 }
             }

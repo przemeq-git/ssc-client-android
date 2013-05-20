@@ -26,10 +26,7 @@ public class PingCommand extends AbstractExtrasCommand {
 
     @Override
     public boolean accepts(Bundle extras) {
-        if (hasExtrasValue(extras, "ping")) {
-            return true;
-        }
-        return false;
+        return hasExtrasValue(extras, "ping");
     }
 
     @Override
@@ -44,7 +41,7 @@ public class PingCommand extends AbstractExtrasCommand {
         server.sendStatus(responseServer, new JSONObject(result));
     }
 
-    private final Map<String, Object> responseMap(Context context, String token) {
+    private Map<String, Object> responseMap(Context context, String token) {
         final IdentifierProvider statusHelper = new IdentifierProvider(context);
         final Map<String, Object> result = new HashMap<String, Object>();
         result.put(Fields.DEVICE_ID, statusHelper.getDeviceId());

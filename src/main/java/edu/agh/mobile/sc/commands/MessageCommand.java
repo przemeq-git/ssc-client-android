@@ -15,10 +15,7 @@ public class MessageCommand extends AbstractExtrasCommand {
 
     @Override
     public boolean accepts(Bundle extras) {
-        if (hasExtrasValue(extras, "message")) {
-            return true;
-        }
-        return false;
+        return hasExtrasValue(extras, "message");
     }
 
     @Override

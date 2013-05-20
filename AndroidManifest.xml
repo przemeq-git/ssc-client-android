@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="edu.agh.mobile.sc" android:versionCode="8" android:versionName="1.1.0">
+          package="edu.agh.mobile.sc" android:versionCode="12" android:versionName="1.1.2">
 
     <uses-sdk android:minSdkVersion="8"
               android:targetSdkVersion="8"/>
@@ -50,6 +50,18 @@
         <receiver android:name=".dynamic.NetworkChangeReceiver" android:enabled="false">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".dynamic.NetworkChangeReceiver" android:enabled="false">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".communication.RegistrationBackOff" android:enabled="true">
+            <intent-filter>
+                <action android:name="edu.agh.mobile.sc.REGISTRATION_BACK_OFF"/>
             </intent-filter>
         </receiver>
 

@@ -20,18 +20,11 @@ public class PowerUpdateReceiver extends AbstractStatusBroadcastReceiver {
         final NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         final boolean isNetworkConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         if (isNetworkConnected) {
-            final boolean connected;
-            if (intent.getAction().equals(Intent.ACTION_POWER_CONNECTED)) {
-                connected = true;
-            } else {
-                connected = false;
-            }
-
+            final boolean connected = intent.getAction().equals(Intent.ACTION_POWER_CONNECTED);
             final String serverURL = new Settings().getServerAddress(context) + "/battery";
-
             final MessageBuilder builder = MessageBuilder.create(context, "btoken");
             builder.with("connected", connected);
-            sendMessage(serverURL, builder);
+            sendMessage(context, serverURL, builder);
         }
     }
 

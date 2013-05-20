@@ -43,12 +43,10 @@ public class MemDataProvider implements DataProvider {
                 } catch (IOException e) {
                     Log.e(Constants.SC_LOG_TAG, "Could not read memory info", e);
                 } finally {
-                    if (br != null) {
-                        try {
-                            br.close();
-                        } catch (IOException e) {
-                            Log.e(Constants.SC_LOG_TAG, "Could not close the stream", e);
-                        }
+                    try {
+                        br.close();
+                    } catch (IOException e) {
+                        Log.e(Constants.SC_LOG_TAG, "Could not close the stream", e);
                     }
                 }
             } catch (FileNotFoundException e) {

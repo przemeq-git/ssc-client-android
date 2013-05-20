@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import edu.agh.mobile.sc.Constants;
-import edu.agh.mobile.sc.IdRegistration;
+import edu.agh.mobile.sc.communication.IdRegistration;
 import edu.agh.mobile.sc.Settings;
 
 /**
@@ -14,10 +14,7 @@ public class RegisterCommand extends AbstractExtrasCommand {
 
     @Override
     public boolean accepts(Bundle extras) {
-        if (hasExtrasValue(extras, "register")) {
-            return true;
-        }
-        return false;
+        return hasExtrasValue(extras, "register");
     }
 
     @Override

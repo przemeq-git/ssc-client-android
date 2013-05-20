@@ -23,10 +23,7 @@ public class StatusCommand extends AbstractExtrasCommand {
 
     @Override
     public boolean accepts(Bundle extras) {
-        if (hasExtrasValue(extras, "status")) {
-            return true;
-        }
-        return false;
+        return hasExtrasValue(extras, "status");
     }
 
     @Override

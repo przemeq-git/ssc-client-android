@@ -8,7 +8,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import com.google.android.gcm.GCMRegistrar;
-import edu.agh.mobile.sc.commands.DynamicCommand;
+import edu.agh.mobile.sc.communication.IdRegistration;
+import edu.agh.mobile.sc.communication.RegistrationTask;
 
 public class SocialComputerActivity extends Activity {
 
@@ -32,14 +33,14 @@ public class SocialComputerActivity extends Activity {
             GCMRegistrar.checkDevice(this);
             GCMRegistrar.checkManifest(this);
             final String regId = GCMRegistrar.getRegistrationId(this);
-            if (regId.equals("")) {
+            if (regId.isEmpty()) {
                 Log.d(Constants.SC_LOG_TAG, "Registering in GCM");
                 GCMRegistrar.register(this, Constants.SENDER_ID);
             } else {
                 Log.d(Constants.SC_LOG_TAG, "Already registered in GCM with id = " + regId);
                 if (!settings.isRegistrationSend(this)) {
                     Log.d(Constants.SC_LOG_TAG, "Registering in SC with id = " + regId);
-                    idRegistration.registerId(this, regId);
+                    new RegistrationTask(this).execute(regId, Boolean.toString(true));
                 } else {
                     Log.d(Constants.SC_LOG_TAG, "Already registered in SC with id = " + regId);
                 }
@@ -47,7 +48,7 @@ public class SocialComputerActivity extends Activity {
         } else {
             //not active
             if (!settings.isUnregistrationSend(this)) {
-                idRegistration.unregisterId(this, settings.getRegistrationId(this));
+                updateServerRegistration(false);
             }
         }
         updateActivationStatusView();
@@ -74,18 +75,18 @@ public class SocialComputerActivity extends Activity {
                 final Context context = SocialComputerActivity.this;
                 final boolean active = settings.isMobileComputingActive(context);
 
+                settings.setMobileComputingActive(SocialComputerActivity.this, checkBoxValue);
                 if (checkBoxValue != active) {
-                    settings.setMobileComputingActive(SocialComputerActivity.this, checkBoxValue);
-                    if (checkBoxValue) {
-                        //if activated - register
-                        idRegistration.registerId(context, settings.getRegistrationId(context));
-                    } else {
-                        idRegistration.unregisterId(context, settings.getRegistrationId(context));
-                    }
+                    updateServerRegistration(checkBoxValue);
                 }
                 updateActivationStatusView();
             }
         });
+    }
+
+    private void updateServerRegistration(boolean register) {
+        //if activated - register
+        new RegistrationTask(this).execute(settings.getRegistrationId(this), Boolean.toString(register));
     }
 
 }

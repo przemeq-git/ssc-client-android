@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import com.google.android.gcm.GCMBaseIntentService;
 import edu.agh.mobile.sc.commands.*;
+import edu.agh.mobile.sc.communication.IdRegistration;
 import edu.agh.mobile.sc.communication.SocialComputingServer;
 import edu.agh.mobile.sc.executor.ComputationService;
 
